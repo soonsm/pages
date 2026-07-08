@@ -1,421 +1,128 @@
 
-:root {
-  --background: 240 7% 95%;
-  --foreground: 240 7% 11%;
-  --muted: 240 9% 92%;
-  --muted-foreground: 240 5% 44%;
-  --border: 240 10% 87%;
-  --accent: 240 10% 88%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 7% 11%;
-  --anchor-color: #6b9ed8;
-  --app-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.8125rem;
-  --font-size-base: 0.875rem;
-  --font-size-readable: 0.875rem;
-  --font-size-lg: 1rem;
-  --font-size-xl: 1.125rem;
-  --heading-scale: 0.8;
-  --heading1-size: max(calc(2rem * var(--heading-scale)), var(--font-size-readable, 0.875rem));
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-readable: 550;
-  --font-weight-bold: 600;
-  --line-height-tight: 1.2;
-  --line-height-readable: 1.25rem;
-  --line-height-normal: 1.3;
-  --line-height-relaxed: 1.5;
-  --border-width-thin: 0.0625rem;
-  --border-radius-sm: 0.25rem;
-  --border-radius-base: 0.375rem;
-  --radius: 0.5rem;
-  --border-radius-lg: var(--radius);
-  --editor-content-max-width: 53.75rem;
-  --notaly-shell-bg: #f0f0f3;
-  --notaly-shell-surface: #ffffff;
-  --notaly-shell-hover: #e8e8ec;
-  --notaly-shell-active: #dcdce2;
-  --notaly-shell-border: rgba(0, 0, 0, 0.11);
-  --notaly-shell-text-primary: #1a1a1e;
-  --notaly-readable-text-primary: #0d1821;
-  --notaly-shell-text-secondary: #6b6b76;
-  --notaly-shell-text-tertiary: #8a8a95;
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+
+/* ---- 팔레트 & 토큰 (라이트) ---- */
+.app-wrapper {
+  --sans: "Helvetica Neue", Helvetica, "Segoe UI", Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --paper: #fbfaf7; --paper-2: #f1efe9; --surface: #ffffff;
+  --ink: #131210; --ink-soft: #33312b; --muted: #5a584d; --faint: #6d6b5f;
+  --line: #e5e3db; --line-2: #cdccc1; --edge: #131210;
+  --pop: #cbee2f; --pop-2: #bfe21f; --pop-ink: #131210;
+  --link: #131210;
+  --shadow: 0 2px 0 var(--edge);
+}
+/* ---- 팔레트 & 토큰 (다크) ---- */
+.app-wrapper.dark {
+  --paper: #100f0d; --paper-2: #1a1915; --surface: #16150f;
+  --ink: #f4f2ea; --ink-soft: #d2d0c6; --muted: #a4a291; --faint: #8d8b7c;
+  --line: #262620; --line-2: #3a382f; --edge: #4a4838;
+  --pop: #cbee2f; --pop-2: #d9f84f; --pop-ink: #100f0d;
+  --link: #f4f2ea;
+  --shadow: 0 2px 0 var(--edge);
 }
 
-:root.dark {
-  --background: 240 8% 7%;
-  --foreground: 240 6% 87%;
-  --muted: 240 8% 13%;
-  --muted-foreground: 240 6% 60%;
-  --border: 240 8% 22%;
-  --accent: 240 8% 17%;
-  --card: 240 8% 10%;
-  --card-foreground: 240 6% 87%;
-  --anchor-color: #89b3e6;
-  --notaly-shell-bg: #111114;
-  --notaly-shell-surface: #17171b;
-  --notaly-shell-hover: #1f1f24;
-  --notaly-shell-active: #28282f;
-  --notaly-shell-border: rgba(255, 255, 255, 0.12);
-  --notaly-shell-text-primary: #dcdce0;
-  --notaly-readable-text-primary: #d1d5db;
-  --notaly-shell-text-secondary: #9494a0;
-  --notaly-shell-text-tertiary: #868690;
-}
+.app-wrapper { background: var(--paper); color: var(--ink); }
+.gr-root { min-height: 100vh; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
 
-* { box-sizing: border-box; }
-
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+/* ---- 톱바 ---- */
+.gr-topbar {
+  position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 2px solid var(--edge);
+  display: flex; align-items: stretch;
 }
-
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: var(--app-font-family);
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
+.gr-wordmark {
+  display: flex; align-items: center; gap: 8px; padding: 14px 20px; font-weight: 800; font-size: 17px;
+  letter-spacing: -.02em; color: var(--ink); text-decoration: none; border-right: 2px solid var(--edge); white-space: nowrap;
 }
-
-.st-layout {
-  --st-sidebar-width: 13.75rem;
-  --st-collapsed-rail-width: 3rem;
-  --st-content-inline: 1.5rem;
-  --st-tree-row-pad-inline: 0rem;
-  --st-tree-row-gap: 0.3125rem;
-  --st-tree-toggle-size: 1.375rem;
-  --st-tree-children-offset: calc(
-    var(--st-tree-row-pad-inline) + var(--st-tree-toggle-size) + var(--st-tree-row-gap)
-  );
-  display: grid;
-  grid-template-columns: var(--st-sidebar-width) 0.25rem minmax(0, 1fr);
-  width: 100%;
-  height: 100%;
-}
-
-.st-layout[data-sidebar-open='false'] {
-  grid-template-columns: var(--st-collapsed-rail-width) minmax(0, 1fr);
-}
-
-.st-sidebar {
-  grid-column: 1 / 2;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  padding: 0.5rem 0.25rem 0.25rem;
-  border-right: none;
-  background: linear-gradient(180deg, var(--notaly-shell-surface) 0%, var(--notaly-shell-bg) 100%);
-}
-
-.st-sidebar-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.125rem 0.25rem 0.5rem;
-  background: transparent;
-  flex-shrink: 0;
-}
-
-.st-sidebar-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  padding: 0;
-}
-
-.st-sidebar-brand {
-  flex-shrink: 0;
-  margin-top: 0.875rem;
-  padding: 0.25rem 0.25rem 0;
-  border-top: var(--border-width-thin) solid var(--notaly-shell-border);
-  font-size: var(--font-size-xs);
-  line-height: 1.3;
-  font-weight: var(--font-weight-normal);
-  color: var(--notaly-shell-text-tertiary);
-}
-
-.st-sidebar-brand-link {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.125em;
-}
-
-.st-sidebar-icon-button {
-  width: 1.375rem;
-  height: 1.375rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  border-radius: var(--border-radius-sm);
-  color: var(--notaly-shell-text-tertiary);
-  cursor: pointer;
-  padding: 0;
-  line-height: 0;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-}
-
-.st-sidebar-icon-button:hover {
-  background: var(--notaly-shell-hover);
-  color: var(--notaly-shell-text-primary);
-}
-
-.st-sidebar-icon-button svg {
-  flex-shrink: 0;
-  width: 0.875rem;
-  height: 0.875rem;
-}
-
-.st-collapsed-rail {
-  grid-column: 1 / 2;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 0.625rem;
-  border-right: var(--border-width-thin) solid hsl(var(--border));
-  background: linear-gradient(180deg, var(--notaly-shell-surface) 0%, var(--notaly-shell-bg) 100%);
-}
-
-.st-sidebar-resizer {
-  grid-column: 2 / 3;
-  position: relative;
-  cursor: col-resize;
-  touch-action: none;
-}
-
-.st-sidebar-resizer::before {
-  content: none;
-}
-
-.st-layout[data-sidebar-open='false'] .st-sidebar {
-  display: none;
-}
-
-.st-layout[data-sidebar-open='false'] .st-sidebar-resizer {
-  display: none;
-}
-
-.st-layout[data-sidebar-open='false'] .st-collapsed-rail {
-  display: flex;
-}
-
-.st-sidebar-title {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--notaly-shell-text-tertiary);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.st-tree-folder,
-.st-tree-page-row {
-  width: 100%;
-}
-
-.st-tree-folder + .st-tree-folder {
-  margin-top: 0.625rem;
-}
-
-.st-tree-row {
-  display: flex;
-  align-items: center;
-  gap: var(--st-tree-row-gap);
-  min-height: 1.625rem;
-  padding: 0.1875rem 0;
-  border-radius: var(--border-radius-base);
-}
-
-.st-tree-toggle {
-  width: var(--st-tree-toggle-size);
-  height: var(--st-tree-toggle-size);
-  border: none;
-  background: transparent;
-  color: var(--notaly-shell-text-tertiary);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--border-radius-sm);
-  padding: 0;
-  font-size: 1.125rem;
-  line-height: 1;
-  flex-shrink: 0;
-  opacity: 0.85;
-}
-
-.st-tree-toggle:hover {
-  background: var(--notaly-shell-hover);
-  color: var(--notaly-shell-text-primary);
-}
-
-.st-tree-folder-name {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-tight);
-  color: var(--notaly-shell-text-secondary);
-}
-
-.st-tree-children {
-  margin-left: var(--st-tree-children-offset);
-  padding-left: 0;
-  border-left: none;
-}
-
-.st-tree-page-row + .st-tree-page-row {
-  margin-top: 0.125rem;
-}
-
-.st-tree-page {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 1.875rem;
-  text-decoration: none;
-  color: var(--notaly-shell-text-secondary);
-  border-radius: var(--border-radius-base);
-  padding: 0.3125rem 0.625rem 0.3125rem var(--st-tree-children-offset);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.2;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-}
-
-.st-tree-page::before {
-  content: '';
-  position: absolute;
-  left: 0.1875rem;
-  top: 50%;
-  width: 0.125rem;
-  height: 70%;
-  border-radius: 0.125rem;
-  background: var(--notaly-shell-text-primary);
-  transform: translateY(-50%) scaleY(0.65);
-  opacity: 0;
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
-}
-
-.st-tree-page:hover {
-  background: var(--notaly-shell-hover);
-  color: var(--notaly-shell-text-primary);
-}
-
-.st-tree-page.is-active {
-  background: var(--notaly-shell-active);
-  color: var(--notaly-shell-text-primary);
-  font-weight: var(--font-weight-medium);
-}
-
-.st-tree-page.is-active::before {
-  opacity: 0.95;
-  transform: translateY(-50%) scaleY(1);
-}
-
-.st-main {
-  grid-column: 3 / 4;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  background: var(--notaly-shell-surface);
-}
-
-.st-layout[data-sidebar-open='false'] .st-main {
-  grid-column: 2 / 3;
-}
-
-.st-main-topbar {
-  flex-shrink: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: flex-start;
-  gap: 1rem;
-  width: 100%;
-  max-width: var(--editor-content-max-width);
-  margin: 0 auto;
-  padding: 1.25rem var(--group-icon-area-width, 2.5rem) 0.75rem var(--group-icon-area-width, 2.5rem);
-  box-sizing: border-box;
-}
-
-.st-main-topbar-left {
-  grid-column: 1;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.25rem;
-  min-width: 0;
-  width: 100%;
-}
-
-.st-main-title {
-  margin: 0;
-  font-size: var(--heading1-size);
-  color: var(--notaly-shell-text-primary);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-relaxed);
-  letter-spacing: 0;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-.st-main-description {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-  color: var(--notaly-shell-text-tertiary);
-}
+.gr-wordmark .star { color: var(--pop-ink); background: var(--pop); width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; }
+.gr-top-right { display: flex; align-items: center; padding: 0 14px; border-left: 2px solid var(--edge); margin-left: auto; }
 
 .st-theme-toggle {
-  grid-column: 2;
-  justify-self: end;
-  border: var(--border-width-thin) solid var(--notaly-shell-border);
-  background: transparent;
-  color: var(--notaly-shell-text-tertiary);
-  border-radius: var(--border-radius-base);
-  height: 1.875rem;
-  padding: 0 0.5625rem;
-  cursor: pointer;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  line-height: 1;
-  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1.5px solid var(--edge);
+  background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.st-theme-toggle:hover { background: var(--pop); color: var(--pop-ink); border-color: var(--edge); }
+
+/* ---- 본문(아티클) : 콘텐츠 + 우측 넘버 인덱스 ---- */
+.gr-article { display: grid; grid-template-columns: 1fr 20rem; max-width: 84rem; margin: 0 auto; }
+.gr-art-main { min-width: 0; border-right: 2px solid var(--edge); }
+.gr-art-hero { padding: 40px 44px 34px; border-bottom: 2px solid var(--edge); }
+.gr-kicker { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pop-ink); background: var(--pop); padding: 4px 10px; margin-bottom: 20px; }
+/* 평면 사이트는 breadcrumb가 비므로 라임 칩이 빈 채로 그려지지 않게 숨긴다. */
+.gr-kicker:empty { display: none; }
+.gr-title { margin: 0; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; line-height: .98; letter-spacing: -.035em; color: var(--ink); }
+.gr-art-body { padding: 34px 44px 60px; }
+
+.gr-rail { position: sticky; top: 0; align-self: start; padding: 30px 26px 40px; max-height: 100vh; overflow: auto; }
+.gr-rail-label { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; padding-bottom: 12px; border-bottom: 2px solid var(--edge); }
+
+.gr-foot { border-top: 2px solid var(--edge); padding: 22px 40px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+.gr-foot a { color: var(--ink); text-decoration: none; }
+.gr-foot a:hover { color: var(--ink); background: var(--pop); }
+
+.app-wrapper a:focus-visible, .app-wrapper button:focus-visible { outline: 3px solid var(--pop); outline-offset: 1px; }
+
+/* ---- 우측 넘버 인덱스 : notaly navHtml(.st-tree-*)을 gr-rail 미감으로 재스타일 ---- */
+/* The Grid 시그니처: 페이지 링크 앞에 zero-pad 번호(01,02…)를 CSS counter로 붙인다. */
+.gr-rail { counter-reset: gr-rail-index; }
+.gr-rail .st-tree-page::before {
+  counter-increment: gr-rail-index;
+  content: counter(gr-rail-index, decimal-leading-zero);
+  /* 기본 nav의 active 인디케이터 막대(absolute/opacity:0)를 넘버링 글리프로 되돌린다.
+     원본 .gr-rail a .num: 링크 폰트(13.5px) 상속 · weight 700 · faint · 텍스트와 gap 10px. */
+  position: static; width: auto; height: auto; opacity: 1; transform: none; background: none;
+  margin-right: 10px; font-size: inherit; font-weight: 700; color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+/* 원본은 번호(.num)를 라임 하이라이트 밖에 faint로 둔다. 이 마크업은 번호가 앵커 ::before라
+   앵커 전체 라임이 번호까지 덮으므로, 번호 뒤에 paper 패치를 깔아 라임을 텍스트 영역에만 남긴다. */
+.gr-rail .st-tree-page.is-active::before {
+  color: var(--faint); background: var(--paper);
+  padding-left: 5px; margin-left: -5px;
+}
+.gr-rail .st-tree-folder { margin-bottom: 18px; }
+.gr-rail .st-tree-row {
+  display: flex; align-items: center; gap: 6px; margin: 0 0 6px;
+}
+.gr-rail .st-tree-toggle {
+  appearance: none; background: transparent; border: 0; cursor: pointer; padding: 0; line-height: 1;
+  font-size: 12px; color: var(--faint); flex-shrink: 0;
+}
+.gr-rail .st-tree-toggle:hover { color: var(--ink); }
+/* 폴더 라벨을 페이지 이름과 같은 위계로: 페이지와 같은 글자 크기·색, 폴더 신호는 굵기로만 준다(작은 캡션 제거). */
+.gr-rail .st-tree-folder-name {
+  flex: 1; min-width: 0;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 700; letter-spacing: 0; text-transform: none;
+  color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gr-rail .st-tree-children { display: block; }
+/* tree-toggle.js 접기는 hidden 속성을 쓰므로 display 강제를 원복해야 접힌다. */
+.gr-rail .st-tree-children[hidden] { display: none; }
+/* 원본 .gr-rail .sub a { padding-left: 16px } 의 중첩 리듬을 폴더 컨테이너 들여쓰기로 재현. */
+.gr-rail .st-tree-folder .st-tree-children .st-tree-folder { margin-left: 16px; margin-bottom: 10px; }
+.gr-rail .st-tree-page-row { display: flex; align-items: center; }
+.gr-rail .st-tree-page {
+  display: block; padding: 6px 0; text-decoration: none; color: var(--ink-soft);
+  font-family: var(--sans); font-size: 13.5px; font-weight: 600; line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gr-rail .st-tree-page:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+.gr-rail .st-tree-page.is-active {
+  color: var(--pop-ink); background: var(--pop); padding-left: 5px; padding-right: 5px; box-decoration-break: clone;
 }
 
-.st-theme-toggle:hover {
-  background: var(--notaly-shell-hover);
-  color: var(--notaly-shell-text-primary);
-  border-color: var(--notaly-shell-border);
+/* ---- 반응형 ---- */
+@media (max-width: 900px) {
+  .gr-article { grid-template-columns: 1fr; }
+  .gr-art-main { border-right: 0; }
+  .gr-rail { position: static; max-height: none; border-top: 2px solid var(--edge); }
 }
-
-.st-page-scroll {
-  overflow: auto;
-  min-height: 0;
-  height: 100%;
-}
-
-.editorContainer.static-export {
-  margin: 0;
-  padding: 0 1.25rem 4rem 0;
-  background-color: transparent;
-  color: var(--notaly-readable-text-primary);
+@media (max-width: 620px) {
+  .gr-art-hero, .gr-art-body, .gr-rail { padding-left: 22px; padding-right: 22px; }
+  .gr-wordmark { padding: 12px 16px; }
 }
 
 .editorContainer.static-export .editorTitle,
@@ -508,28 +215,6 @@ body {
 .editorContainer.static-export [data-st-md-type*='task_html']:hover {
   text-decoration: none;
 }
-
-body.st-sidebar-resizing,
-body.st-sidebar-resizing * {
-  cursor: col-resize !important;
-  user-select: none !important;
-}
-
-@media (max-width: 60rem) {
-  .st-layout {
-    --st-sidebar-width: 13.75rem;
-    --st-collapsed-rail-width: 3rem;
-    --st-content-inline: 1rem;
-    grid-template-columns: var(--st-sidebar-width) 0.1875rem minmax(0, 1fr);
-  }
-
-  .st-main-topbar {
-    padding-top: 0.875rem;
-    padding-bottom: 0.625rem;
-  }
-
-}
-
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -1583,6 +1268,11 @@ video {
     flex-direction: column;
     gap: 15px;
   }        
+/* body는 flex column 스크롤 컨테이너다. 자식(특히 overflow:hidden인 .ssx-group/.ssx-sitelist)이
+     flex-shrink로 줄어들면 스크롤 대신 내부 내용이 잘린다. 자식을 안 줄이면 넘칠 때 body가 스크롤한다. */        
+.ssx-dialog__body > * {
+    flex-shrink: 0;
+  }        
 .ssx-dialog__footer {
     flex: 0 0 auto;
     display: flex;
@@ -1819,6 +1509,19 @@ video {
     color: var(--notaly-shell-text-tertiary);
     line-height: 1.5;
   }        
+/* 배포 대상 "연결 테스트" 버튼 + 결과 상태 줄 */        
+.ssx-repocheck-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }        
+.ssx-repocheck {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }        
 .ssx-input {
     width: 100%;
     box-sizing: border-box;
@@ -2051,6 +1754,23 @@ video {
     background: transparent;
     color: var(--notaly-shell-text-tertiary);
     border: 1px dashed color-mix(in srgb, var(--notaly-shell-text-tertiary) 55%, transparent);
+  }        
+/* 클릭 가능한 미설정 뱃지(배포 설정 진입점): dashed 뱃지에 버튼 어포던스만 얹는다. */        
+.ssx-badge--action {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    font-family: inherit;
+    cursor: pointer;
+  }        
+.ssx-badge--action:hover {
+    color: var(--notaly-shell-text-primary);
+    border-color: var(--notaly-shell-text-tertiary);
+    background: var(--notaly-shell-hover);
+  }        
+.ssx-badge--action:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--notaly-shell-focus-ring);
   }        
 .ssx-badge__dot {
     width: 6px;
@@ -2399,15 +2119,15 @@ video {
 /* ---- 옵션 단계: 디자인 템플릿 선택 카드 ---- */        
 .ssx-templategrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
   }        
 .ssx-templatecard {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 10px 11px 11px;
+    gap: 8px;
+    padding: 10px 10px 11px;
     border: 1px solid var(--notaly-shell-border);
     border-radius: 10px;
     background: var(--notaly-shell-surface);
@@ -2428,20 +2148,18 @@ video {
     border-color: var(--notaly-shell-focus-border);
     box-shadow: inset 0 0 0 1px var(--notaly-shell-focus-border);
   }        
-.ssx-templatecard__input:focus-visible ~ .ssx-templatecard__swatches {
+.ssx-templatecard__input:focus-visible ~ .ssx-templatecard__thumb {
     outline: 2px solid var(--notaly-shell-focus-ring);
     outline-offset: 2px;
-    border-radius: 3px;
   }        
-.ssx-templatecard__swatches {
-    display: flex;
-    gap: 3px;
-  }        
-.ssx-templatecard__swatch {
-    width: 22px;
-    height: 14px;
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 1px var(--notaly-shell-border);
+/* 썸네일 프레임: 각 export 디자인의 축소 미리보기(순수 CSS)를 담는다. */        
+.ssx-templatecard__thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 8 / 5;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--notaly-shell-card-border);
   }        
 .ssx-templatecard__name {
     font-size: 12.5px;
@@ -2455,19 +2173,452 @@ video {
   }        
 .ssx-templatecard__check {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 16px;
+    right: 16px;
     display: none;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: var(--notaly-shell-inbox-accent);
     color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   }        
 .ssx-templatecard--active .ssx-templatecard__check {
     display: inline-flex;
+  }        
+/* ---- 디자인 선택 썸네일: export 디자인 팔레트/타이포/레이아웃을 압축한 순수 CSS 미니어처.
+     테마 독립 미리보기라 app 토큰이 아니라 각 export 디자인의 고정 hex를 그대로 쓴다.
+     자식 클래스는 전부 .ssx-thumb--<id> 하위로 스코프해 전역 충돌을 피한다. ---- */        
+.ssx-thumb {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    --thumb-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --thumb-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }        
+/* 1 · Docs — 좌측 트리 + 본문, 인디고 */        
+.ssx-thumb--docs {
+    background: #f5f6fb;
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    font-size: 9px;
+  }        
+.ssx-thumb--docs .side {
+    background: #eef0f7;
+    border-right: 1px solid #e2e4ef;
+    padding: 11px 10px;
+  }        
+.ssx-thumb--docs .lbl {
+    display: block;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #868da0;
+    margin-bottom: 8px;
+  }        
+.ssx-thumb--docs .row {
+    display: block;
+    color: #585f72;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+  }        
+.ssx-thumb--docs .\!row {
+    display: block !important;
+    color: #585f72 !important;
+    padding: 3px 6px !important;
+    border-radius: 4px !important;
+    margin-bottom: 2px !important;
+    white-space: nowrap !important;
+  }        
+.ssx-thumb--docs .row.cur {
+    background: #ebeafc;
+    color: #3f3ec2;
+    font-weight: 700;
+  }        
+.ssx-thumb--docs .\!row.cur {
+    background: #ebeafc !important;
+    color: #3f3ec2 !important;
+    font-weight: 700 !important;
+  }        
+.ssx-thumb--docs .row.sub {
+    padding-left: 15px;
+    color: #868da0;
+  }        
+.ssx-thumb--docs .\!row.sub {
+    padding-left: 15px !important;
+    color: #868da0 !important;
+  }        
+.ssx-thumb--docs .main {
+    padding: 12px 13px;
+  }        
+.ssx-thumb--docs .top {
+    display: block;
+    height: 6px;
+    width: 44%;
+    background: #e6e8f2;
+    border-radius: 3px;
+    margin-bottom: 13px;
+  }        
+.ssx-thumb--docs .title {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #181a22;
+    margin-bottom: 11px;
+  }        
+.ssx-thumb--docs .\!title {
+    display: block !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    color: #181a22 !important;
+    margin-bottom: 11px !important;
+  }        
+.ssx-thumb--docs .ln {
+    display: block;
+    height: 5px;
+    background: #e0e2ee;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }        
+/* 2 · The Journal — 세리프 에디토리얼, 따뜻한 종이 */        
+.ssx-thumb--journal {
+    background: #f3efe6;
+    padding: 13px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }        
+.ssx-thumb--journal .mast {
+    font-family: var(--thumb-serif);
+    font-size: 15px;
+    color: #221d16;
+    letter-spacing: 0.01em;
+  }        
+.ssx-thumb--journal .nav {
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #776e5d;
+    margin-top: 5px;
+  }        
+.ssx-thumb--journal .rule {
+    height: 1px;
+    background: #ddd4c2;
+    margin: 9px 0 12px;
+  }        
+.ssx-thumb--journal .\!rule {
+    height: 1px !important;
+    background: #ddd4c2 !important;
+    margin: 9px 0 12px !important;
+  }        
+.ssx-thumb--journal .eyebrow {
+    display: block;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #b1402a;
+  }        
+.ssx-thumb--journal .title {
+    display: block;
+    font-family: var(--thumb-serif);
+    font-size: 25px;
+    line-height: 1.02;
+    color: #221d16;
+    margin-top: 7px;
+    letter-spacing: -0.01em;
+  }        
+.ssx-thumb--journal .\!title {
+    display: block !important;
+    font-family: var(--thumb-serif) !important;
+    font-size: 25px !important;
+    line-height: 1.02 !important;
+    color: #221d16 !important;
+    margin-top: 7px !important;
+    letter-spacing: -0.01em !important;
+  }        
+.ssx-thumb--journal .lns {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }        
+.ssx-thumb--journal .lns i {
+    height: 4px;
+    background: #ddd4c2;
+    border-radius: 2px;
+    width: 62%;
+  }        
+/* 3 · The Grid — 볼드 그리드, 라임 팝 */        
+.ssx-thumb--grid {
+    background: #fbfaf7;
+    display: flex;
+    flex-direction: column;
+  }        
+.ssx-thumb--grid .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 11px;
+    border-bottom: 2px solid #131210;
+  }        
+.ssx-thumb--grid .mark {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #131210;
+  }        
+.ssx-thumb--grid .mark .star {
+    background: #cbee2f;
+    padding: 1px 3px;
+    margin-right: 3px;
+  }        
+.ssx-thumb--grid .nav {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #5a584d;
+  }        
+.ssx-thumb--grid .hero {
+    background: #cbee2f;
+    color: #131210;
+    padding: 11px 12px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }        
+.ssx-thumb--grid .hero .t {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }        
+.ssx-thumb--grid .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 2px solid #131210;
+  }        
+.ssx-thumb--grid .card {
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #131210;
+    border-right: 1px solid #e5e3db;
+  }        
+.ssx-thumb--grid .card:last-child {
+    border-right: 0;
+  }        
+.ssx-thumb--grid .card .tag {
+    display: block;
+    font-size: 6px;
+    letter-spacing: 0.1em;
+    color: #131210;
+    background: #cbee2f;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 1px 4px;
+    margin-bottom: 4px;
+  }        
+.ssx-thumb--grid .card .\!tag {
+    display: block !important;
+    font-size: 6px !important;
+    letter-spacing: 0.1em !important;
+    color: #131210 !important;
+    background: #cbee2f !important;
+    width: -moz-max-content !important;
+    width: max-content !important;
+    padding: 1px 4px !important;
+    margin-bottom: 4px !important;
+  }        
+/* 4 · Terminal — 다크 모노, 그린 */        
+.ssx-thumb--terminal {
+    background: #0b0d0e;
+    font-family: var(--thumb-mono);
+    display: flex;
+    flex-direction: column;
+  }        
+.ssx-thumb--terminal .bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 9px;
+    border-bottom: 1px solid #1c2224;
+  }        
+.ssx-thumb--terminal .dots {
+    display: flex;
+    gap: 3px;
+  }        
+.ssx-thumb--terminal .dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: block;
+  }        
+.ssx-thumb--terminal .dots i:nth-child(1) {
+    background: #f0776a;
+  }        
+.ssx-thumb--terminal .dots i:nth-child(2) {
+    background: #e3b341;
+  }        
+.ssx-thumb--terminal .dots i:nth-child(3) {
+    background: #46d39a;
+  }        
+.ssx-thumb--terminal .path {
+    font-size: 7.5px;
+    color: #7d8a8f;
+  }        
+.ssx-thumb--terminal .\!path {
+    font-size: 7.5px !important;
+    color: #7d8a8f !important;
+  }        
+.ssx-thumb--terminal .body {
+    display: grid;
+    grid-template-columns: 46% 1fr;
+    flex: 1;
+    min-height: 0;
+  }        
+.ssx-thumb--terminal .tree {
+    padding: 8px 9px;
+    font-size: 8px;
+    line-height: 1.55;
+    color: #b4bec2;
+    border-right: 1px solid #1c2224;
+    white-space: pre;
+  }        
+.ssx-thumb--terminal .tree .d {
+    color: #e3b341;
+  }        
+.ssx-thumb--terminal .tree .c {
+    color: #46d39a;
+  }        
+.ssx-thumb--terminal .doc {
+    padding: 9px 9px;
+  }        
+.ssx-thumb--terminal .\!doc {
+    padding: 9px 9px !important;
+  }        
+.ssx-thumb--terminal .doc .h {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #d7dee1;
+  }        
+.ssx-thumb--terminal .\!doc .h {
+    display: block !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #d7dee1 !important;
+  }        
+.ssx-thumb--terminal .doc .h .hash {
+    color: #46d39a;
+  }        
+.ssx-thumb--terminal .\!doc .h .hash {
+    color: #46d39a !important;
+  }        
+.ssx-thumb--terminal .doc .m {
+    display: block;
+    font-size: 7px;
+    color: #757f83;
+    margin-top: 4px;
+  }        
+.ssx-thumb--terminal .\!doc .m {
+    display: block !important;
+    font-size: 7px !important;
+    color: #757f83 !important;
+    margin-top: 4px !important;
+  }        
+.ssx-thumb--terminal .doc .ln {
+    display: block;
+    height: 4px;
+    background: #1c2224;
+    border-radius: 2px;
+    margin-top: 6px;
+  }        
+.ssx-thumb--terminal .\!doc .ln {
+    display: block !important;
+    height: 4px !important;
+    background: #1c2224 !important;
+    border-radius: 2px !important;
+    margin-top: 6px !important;
+  }        
+/* 5 · Atelier — 조용한 세리프, 여백, 브론즈 */        
+.ssx-thumb--atelier {
+    background: #f5f4f0;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+  }        
+.ssx-thumb--atelier .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }        
+.ssx-thumb--atelier .mark {
+    font-family: var(--thumb-serif);
+    font-size: 11px;
+    color: #1c1b18;
+  }        
+.ssx-thumb--atelier .mark .dot {
+    color: #7d5f33;
+  }        
+.ssx-thumb--atelier .nav {
+    font-size: 6.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6a6760;
+  }        
+.ssx-thumb--atelier .mid {
+    margin: auto 0;
+    text-align: center;
+  }        
+.ssx-thumb--atelier .eyebrow {
+    display: block;
+    font-size: 6.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7d5f33;
+  }        
+.ssx-thumb--atelier .title {
+    display: block;
+    font-family: var(--thumb-serif);
+    font-size: 21px;
+    font-weight: 400;
+    color: #1c1b18;
+    margin-top: 8px;
+    letter-spacing: -0.01em;
+  }        
+.ssx-thumb--atelier .\!title {
+    display: block !important;
+    font-family: var(--thumb-serif) !important;
+    font-size: 21px !important;
+    font-weight: 400 !important;
+    color: #1c1b18 !important;
+    margin-top: 8px !important;
+    letter-spacing: -0.01em !important;
+  }        
+.ssx-thumb--atelier .lns {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    margin-top: 11px;
+  }        
+.ssx-thumb--atelier .lns i {
+    height: 3px;
+    background: #d3d0c6;
+    border-radius: 2px;
+    width: 52%;
   }        
 /* ---- 사이트 관리 모달: GitHub 바 ---- */        
 .ssx-github {
@@ -2572,23 +2723,7 @@ video {
 .ssx-bar__fill--info {
     background: var(--notaly-signal-blue-text);
   }        
-/* ---- 오버플로 메뉴 ---- */        
-.ssx-menu-wrap {
-    position: relative;
-    display: inline-flex;
-  }        
-.ssx-menu {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 4px);
-    z-index: 5;
-    width: 172px;
-    padding: 5px;
-    background: var(--notaly-shell-surface);
-    border: 1px solid var(--notaly-shell-border);
-    border-radius: 9px;
-    box-shadow: var(--notaly-shell-popover-shadow);
-  }        
+/* ---- 오버플로 메뉴 (컨테이너는 AnchoredPopover가 fixed로 렌더한다) ---- */        
 .ssx-menu__item {
     width: 100%;
     text-align: left;
@@ -5623,3 +5758,92 @@ video {
 .app-wrapper:not(.dark) .editorContainer .token.namespace {
   opacity: 0.7;
 }
+
+:root{
+  --background: 45 33% 98%;
+  --foreground: 40 9% 7%;
+  --muted: 45 22% 93%;
+  --muted-foreground: 51 8% 33%;
+  --border: 55 11% 78%;
+  --accent: 71 85% 56%;
+  --primary: 40 9% 7%;
+  --card: 0 0% 100%;
+  --card-foreground: 40 9% 7%;
+  --app-font-family: "Helvetica Neue", Helvetica, "Segoe UI", Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+:root.dark{
+  --background: 40 10% 6%;
+  --foreground: 48 31% 94%;
+  --muted: 48 11% 9%;
+  --muted-foreground: 54 9% 61%;
+  --border: 49 10% 21%;
+  --accent: 71 85% 56%;
+  --primary: 48 31% 94%;
+  --card: 51 19% 7%;
+  --card-foreground: 48 31% 94%;
+}
+/* hex content 토큰은 core.css가 .editorContainer 스코프에 선언하므로 같은 스코프에서 이겨야 한다. */
+.editorContainer{
+  --font-color: #33312b;
+  --anchor-color: #131210;
+  --collection-editor-background-color: rgba(19, 18, 16, 0.03);
+}
+.dark .editorContainer{
+  --font-color: #d2d0c6;
+  --anchor-color: #f4f2ea;
+  --collection-editor-background-color: rgba(244, 242, 234, 0.03);
+}
+/* design content: publish-grade cleanup */
+.editorContainer.static-export { --group-icon-area-width: 1.25rem; }
+/* 마크다운 소스 마커(#, ##, 리스트 '-' 등 *_md/list_src)를 폭까지 제거해 순수 문서로.
+   :has([*_md])로 거는 헤딩 사이징은 display:none 요소도 매칭하므로 그대로 유지된다. */
+.editorContainer.static-export [data-st-md-type$='_md'],
+.editorContainer.static-export [data-st-md-type*='list_src'] { display: none; }
+/* The Grid content typo parity */
+.editorContainer.static-export {
+  /* 본문 1.05rem / leading 1.68 → line-height 1.05*1.68≈1.78rem */
+  --font-size-readable: 1.05rem;
+  --line-height-readable: 1.78rem;
+  /* 헤딩 스케일 1.0 → h1 2rem, h2 1.6rem 등(디자인 볼드 그로테스크) */
+  --heading-scale: 1;
+  /* 매거진 읽기 컬럼 42rem */
+  --editor-content-max-width: 42rem;
+  /* 인용: 라임 팝 콜아웃 틴트 / 코드: 잉크 배경·페이퍼 틴트 */
+  --blockquote-border-color: transparent;
+  --blockquote-mark-color: transparent;
+  --code-block-background-color: #131210;
+  --inline-code-background-color: #f1efe9;
+}
+.dark .editorContainer.static-export {
+  --code-block-background-color: #000000;
+  --inline-code-background-color: #1a1915;
+}
+
+/* 헤딩을 디자인 800 느낌으로(core.css 기본은 bold=700). 콘텐츠 스코프 한정. */
+.editorContainer.static-export [data-st-line]:has([data-st-md-type*='heading']) .contentArea,
+.editorContainer.static-export [data-st-line]:has([data-st-md-type*='heading']) .contentArea::after {
+  font-weight: 800;
+}
+
+/* 인용문 = 라임 채움 콜아웃: blockquote_div 세로 가이드를 가진 라인을 pop 배경 + 진한 굵은 글자로 덮는다.
+   frontArea의 guide/mark는 위에서 transparent 토큰으로 이미 숨겼다. */
+.editorContainer.static-export [data-st-line='true']:has(.blockquote_div) {
+  background: #cbee2f;
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+.editorContainer.static-export [data-st-line='true']:has(.blockquote_div) .contentArea {
+  color: #131210;
+  font-weight: 700;
+}
+.dark .editorContainer.static-export [data-st-line='true']:has(.blockquote_div) {
+  background: #cbee2f;
+}
+.dark .editorContainer.static-export [data-st-line='true']:has(.blockquote_div) .contentArea {
+  color: #131210;
+}
+/* natural-flow body scroll restore */
+html.app-wrapper, html.app-wrapper body { overflow: visible; }
+/* 자연 흐름 셸엔 내부 가로 스크롤 컨테이너가 없어 넓은 표가 페이지를 가로로 민다.
+   표는 표 라인 안에서만 가로 스크롤시켜 문서 가로 스크롤을 막는다(고정높이 셸은 바깥 컨테이너가 이미 가둠). */
+html.app-wrapper .editorContainer.static-export [data-st-line-type='table_html'] > .contentArea { overflow-x: auto; }
