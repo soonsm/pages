@@ -1,128 +1,104 @@
 
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; }
 
 /* ---- 팔레트 & 토큰 (라이트) ---- */
 .app-wrapper {
-  --sans: "Helvetica Neue", Helvetica, "Segoe UI", Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --paper: #fbfaf7; --paper-2: #f1efe9; --surface: #ffffff;
-  --ink: #131210; --ink-soft: #33312b; --muted: #5a584d; --faint: #6d6b5f;
-  --line: #e5e3db; --line-2: #cdccc1; --edge: #131210;
-  --pop: #cbee2f; --pop-2: #bfe21f; --pop-ink: #131210;
-  --link: #131210;
-  --shadow: 0 2px 0 var(--edge);
+  --bg: #f5f4f0; --paper-2: #eceae3; --surface: #faf9f5;
+  --ink: #1c1b18; --ink-soft: #3b392f; --muted: #6a6760; --faint: #6e6b62;
+  --line: #e3e1d9; --line-2: #d3d0c6;
+  --accent: #7d5f33; --accent-soft: #a98a56;
+  --shadow: 0 1px 2px rgba(30,28,20,.04), 0 30px 60px -40px rgba(30,28,20,.3);
 }
 /* ---- 팔레트 & 토큰 (다크) ---- */
 .app-wrapper.dark {
-  --paper: #100f0d; --paper-2: #1a1915; --surface: #16150f;
-  --ink: #f4f2ea; --ink-soft: #d2d0c6; --muted: #a4a291; --faint: #8d8b7c;
-  --line: #262620; --line-2: #3a382f; --edge: #4a4838;
-  --pop: #cbee2f; --pop-2: #d9f84f; --pop-ink: #100f0d;
-  --link: #f4f2ea;
-  --shadow: 0 2px 0 var(--edge);
+  --bg: #191816; --paper-2: #201f1b; --surface: #1d1c19;
+  --ink: #ebe9e2; --ink-soft: #cbc8bd; --muted: #9a978d; --faint: #837f75;
+  --line: #2a2824; --line-2: #3a382f;
+  --accent: #c9a465; --accent-soft: #b28f52;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 30px 60px -36px rgba(0,0,0,.7);
 }
 
-.app-wrapper { background: var(--paper); color: var(--ink); }
-.gr-root { min-height: 100vh; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+html, body { margin: 0; height: 100%; }
+.app-wrapper { background: var(--bg); color: var(--ink); }
+.pf-root { min-height: 100%; background: var(--bg); color: var(--ink); font-family: var(--serif); -webkit-font-smoothing: antialiased; }
 
-/* ---- 톱바 ---- */
-.gr-topbar {
-  position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 2px solid var(--edge);
-  display: flex; align-items: stretch;
+/* ---- 미니멀 상단 ---- */
+.pf-top {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  max-width: 72rem; margin: 0 auto; padding: 26px 3rem 24px;
 }
-.gr-wordmark {
-  display: flex; align-items: center; gap: 8px; padding: 14px 20px; font-weight: 800; font-size: 17px;
-  letter-spacing: -.02em; color: var(--ink); text-decoration: none; border-right: 2px solid var(--edge); white-space: nowrap;
-}
-.gr-wordmark .star { color: var(--pop-ink); background: var(--pop); width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; }
-.gr-top-right { display: flex; align-items: center; padding: 0 14px; border-left: 2px solid var(--edge); margin-left: auto; }
+.pf-identity { font-family: var(--serif); font-size: 1.1rem; letter-spacing: .02em; color: var(--ink); text-decoration: none; }
+.pf-identity .dot { color: var(--accent); }
 
 .st-theme-toggle {
-  display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1.5px solid var(--edge);
-  background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 11px; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border: 1px solid var(--line-2);
+  background: transparent; color: var(--muted); cursor: pointer; font-family: var(--sans); font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; border-radius: 999px;
 }
-.st-theme-toggle:hover { background: var(--pop); color: var(--pop-ink); border-color: var(--edge); }
+.st-theme-toggle:hover { color: var(--ink); border-color: var(--faint); }
 
-/* ---- 본문(아티클) : 콘텐츠 + 우측 넘버 인덱스 ---- */
-.gr-article { display: grid; grid-template-columns: 1fr 20rem; max-width: 84rem; margin: 0 auto; }
-.gr-art-main { min-width: 0; border-right: 2px solid var(--edge); }
-.gr-art-hero { padding: 40px 44px 34px; border-bottom: 2px solid var(--edge); }
-.gr-kicker { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pop-ink); background: var(--pop); padding: 4px 10px; margin-bottom: 20px; }
-/* 평면 사이트는 breadcrumb가 비므로 라임 칩이 빈 채로 그려지지 않게 숨긴다. */
-.gr-kicker:empty { display: none; }
-.gr-title { margin: 0; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; line-height: .98; letter-spacing: -.035em; color: var(--ink); }
-.gr-art-body { padding: 34px 44px 60px; }
+/* ---- 본문(아티클) ---- */
+.pf-article { max-width: 39rem; margin: 0 auto; padding: 9vh 3rem 6vh; }
+.pf-art-head { text-align: center; margin-bottom: 6vh; }
+.pf-kicker { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 24px; word-break: break-word; }
+/* 평면 사이트는 breadcrumb가 비므로 빈 요소를 숨긴다(불필요한 상단 여백 방지). */
+.pf-kicker:empty { display: none; }
+.pf-title { margin: 0; font-size: clamp(2.2rem, 4.6vw, 3rem); font-weight: 400; line-height: 1.12; letter-spacing: -.01em; color: var(--ink); }
 
-.gr-rail { position: sticky; top: 0; align-self: start; padding: 30px 26px 40px; max-height: 100vh; overflow: auto; }
-.gr-rail-label { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; padding-bottom: 12px; border-bottom: 2px solid var(--edge); }
+.pf-foot { max-width: 39rem; margin: 8vh auto 0; padding: 0 3rem 10vh; }
+.pf-foot-rule { height: 1px; background: var(--line); margin-bottom: 34px; }
+.pf-section-label { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); margin: 0 0 8px; }
 
-.gr-foot { border-top: 2px solid var(--edge); padding: 22px 40px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
-.gr-foot a { color: var(--ink); text-decoration: none; }
-.gr-foot a:hover { color: var(--ink); background: var(--pop); }
+.pf-brand { max-width: 72rem; margin: 0 auto; padding: 30px 3rem 40px; border-top: 1px solid var(--line); font-family: var(--sans); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); display: flex; justify-content: space-between; gap: 16px; }
+.pf-brand a { color: var(--muted); text-decoration: none; }
+.pf-brand a:hover { color: var(--accent); }
 
-.app-wrapper a:focus-visible, .app-wrapper button:focus-visible { outline: 3px solid var(--pop); outline-offset: 1px; }
+.app-wrapper a:focus-visible, .app-wrapper button:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
 
-/* ---- 우측 넘버 인덱스 : notaly navHtml(.st-tree-*)을 gr-rail 미감으로 재스타일 ---- */
-/* The Grid 시그니처: 페이지 링크 앞에 zero-pad 번호(01,02…)를 CSS counter로 붙인다. */
-.gr-rail { counter-reset: gr-rail-index; }
-.gr-rail .st-tree-page::before {
-  counter-increment: gr-rail-index;
-  content: counter(gr-rail-index, decimal-leading-zero);
-  /* 기본 nav의 active 인디케이터 막대(absolute/opacity:0)를 넘버링 글리프로 되돌린다.
-     원본 .gr-rail a .num: 링크 폰트(13.5px) 상속 · weight 700 · faint · 텍스트와 gap 10px. */
-  position: static; width: auto; height: auto; opacity: 1; transform: none; background: none;
-  margin-right: 10px; font-size: inherit; font-weight: 700; color: var(--faint);
-  font-variant-numeric: tabular-nums;
+/* ---- notaly navHtml(.st-tree-*) 재스타일 → Atelier 번호 매긴 세리프 인덱스 ----
+ * 원본 (2) SHELL STYLE 의 .pf-group-label + .pf-work 인덱스 미감을 tree 마크업에 이식:
+ * - 폴더 라벨 = .pf-group-label (sans 11px · .2em · uppercase · faint · 하단 구분선)
+ * - 페이지 = .pf-work (세리프 1.7rem 타이틀 · num 컬럼 · 행마다 하단선 · hover 이탤릭)
+ * - top/nested 폴더 라벨은 같은 마크업(재귀)이라 원본처럼 일관 크기로 렌더된다. */
+.pf-nav { list-style: none; margin: 0; padding: 0; }
+.st-tree-folder, .st-tree-page-row { width: 100%; }
+.st-tree-folder + .st-tree-folder { margin-top: 5vh; }
+/* 폴더 헤더 행 = 원본 .pf-group-label 의 구분선/여백 규칙 */
+.st-tree-row { display: flex; align-items: baseline; gap: 12px; padding-bottom: 14px; margin: 0 0 4px; border-bottom: 1px solid var(--line); }
+/* toggle 버튼: tree-toggle.js가 폴더 접기([data-st-toggle])를 배선한다. */
+.st-tree-toggle {
+  appearance: none; border: 0; background: transparent; padding: 0; margin: 0;
+  color: var(--accent); font-family: var(--serif); font-size: 13px; line-height: 1; cursor: pointer;
 }
-/* 원본은 번호(.num)를 라임 하이라이트 밖에 faint로 둔다. 이 마크업은 번호가 앵커 ::before라
-   앵커 전체 라임이 번호까지 덮으므로, 번호 뒤에 paper 패치를 깔아 라임을 텍스트 영역에만 남긴다. */
-.gr-rail .st-tree-page.is-active::before {
-  color: var(--faint); background: var(--paper);
-  padding-left: 5px; margin-left: -5px;
-}
-.gr-rail .st-tree-folder { margin-bottom: 18px; }
-.gr-rail .st-tree-row {
-  display: flex; align-items: center; gap: 6px; margin: 0 0 6px;
-}
-.gr-rail .st-tree-toggle {
-  appearance: none; background: transparent; border: 0; cursor: pointer; padding: 0; line-height: 1;
-  font-size: 12px; color: var(--faint); flex-shrink: 0;
-}
-.gr-rail .st-tree-toggle:hover { color: var(--ink); }
-/* 폴더 라벨을 페이지 이름과 같은 위계로: 페이지와 같은 글자 크기·색, 폴더 신호는 굵기로만 준다(작은 캡션 제거). */
-.gr-rail .st-tree-folder-name {
+/* 폴더 라벨을 페이지 제목과 같은 위계로: 세리프 본문급 크기, muted 색으로만 구분(작은 sans 캡션 제거). */
+.st-tree-folder-name {
   flex: 1; min-width: 0;
-  font-family: var(--sans); font-size: 13.5px; font-weight: 700; letter-spacing: 0; text-transform: none;
-  color: var(--ink);
+  font-family: var(--serif); font-size: 1.36rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.gr-rail .st-tree-children { display: block; }
-/* tree-toggle.js 접기는 hidden 속성을 쓰므로 display 강제를 원복해야 접힌다. */
-.gr-rail .st-tree-children[hidden] { display: none; }
-/* 원본 .gr-rail .sub a { padding-left: 16px } 의 중첩 리듬을 폴더 컨테이너 들여쓰기로 재현. */
-.gr-rail .st-tree-folder .st-tree-children .st-tree-folder { margin-left: 16px; margin-bottom: 10px; }
-.gr-rail .st-tree-page-row { display: flex; align-items: center; }
-.gr-rail .st-tree-page {
-  display: block; padding: 6px 0; text-decoration: none; color: var(--ink-soft);
-  font-family: var(--sans); font-size: 13.5px; font-weight: 600; line-height: 1.3;
+.st-tree-children { margin-left: 0; padding-left: 0; border-left: 0; }
+/* 페이지 행 = 원본 .pf-work: 넉넉한 세로 리듬 + 행마다 하단선 */
+.st-tree-page-row { border-bottom: 1px solid var(--line); }
+.st-tree-page {
+  display: block; padding: 22px 0; text-decoration: none; color: var(--ink);
+  font-family: var(--serif); font-size: 1.7rem; font-weight: 400; line-height: 1.2; letter-spacing: -.01em;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.gr-rail .st-tree-page:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
-.gr-rail .st-tree-page.is-active {
-  color: var(--pop-ink); background: var(--pop); padding-left: 5px; padding-right: 5px; box-decoration-break: clone;
-}
+.st-tree-page:hover { color: var(--accent); font-style: italic; }
+.st-tree-page.is-active { color: var(--accent); font-style: italic; }
+/* nested 페이지(원본 .pf-work.sub): 살짝 들여쓰고 한 단계 작은 세리프 + ink-soft.
+   루트 폴더 승격으로 최상위 페이지엔 .st-tree-children 조상이 없으므로, 폴더 하위(1단계) 페이지가 sub다. */
+.st-tree-children .st-tree-page { padding-left: 1.4rem; font-size: 1.36rem; color: var(--ink-soft); }
+.st-tree-children .st-tree-page.is-active { color: var(--accent); }
 
-/* ---- 반응형 ---- */
-@media (max-width: 900px) {
-  .gr-article { grid-template-columns: 1fr; }
-  .gr-art-main { border-right: 0; }
-  .gr-rail { position: static; max-height: none; border-top: 2px solid var(--edge); }
-}
-@media (max-width: 620px) {
-  .gr-art-hero, .gr-art-body, .gr-rail { padding-left: 22px; padding-right: 22px; }
-  .gr-wordmark { padding: 12px 16px; }
+/* 반응형 */
+@media (max-width: 720px) {
+  .pf-top { padding: 20px 1.4rem; flex-wrap: wrap; }
+  .pf-article, .pf-foot, .pf-brand { padding-left: 1.4rem; padding-right: 1.4rem; }
+  .pf-brand { flex-direction: column; gap: 6px; }
 }
 
 .editorContainer.static-export .editorTitle,
@@ -734,7 +710,7 @@ video {
     --secondary-foreground:      240 7% 11%;           /* 보조 색상 텍스트 */
     --accent:                    240 10% 88%;          /* 액센트 색상 */
     --accent-foreground:         240 7% 11%;           /* 액센트 색상 텍스트 */
-    --destructive:               0 84% 60%;            /* 위험 색상 */
+    --destructive:               0 72% 51%;            /* #dc2626 - 위험 색상 (흰 텍스트 대비 4.5:1 확보) */
     --destructive-foreground:    0 0% 100%;            /* 위험 색상 텍스트 */
     --task-todo-color:           #1d4ed8;              /* TODO 상태 텍스트 색상 */
     --task-todo-border-color:    #647fa8;              /* TODO 계열 버튼 보더 톤다운 색상 */
@@ -852,6 +828,8 @@ video {
     --notaly-shell-text-tertiary: #8a8a95;
     --notaly-shell-popover: #ffffff;
     --notaly-shell-popover-shadow: 0 8px 30px rgb(0 0 0 / 0.12);
+    --notaly-shell-modal-shadow: 0 12px 40px rgb(0 0 0 / 0.14);
+    --notaly-toast-surface: var(--notaly-shell-surface);
     --notaly-shell-toolbar: #f0f0f3;
     --notaly-shell-inbox-accent: #b5780f;
     --notaly-shell-focus-border: rgba(26, 26, 30, 0.34);
@@ -869,6 +847,7 @@ video {
     --notaly-surface-muted: var(--notaly-shell-text-secondary);
     --notaly-surface-subtle: var(--notaly-shell-text-tertiary);
     --notaly-surface-shadow: var(--notaly-shell-popover-shadow);
+    --notaly-surface-modal-shadow: var(--notaly-shell-modal-shadow);
     --notaly-surface-focus-border: var(--notaly-shell-focus-border);
     --notaly-surface-focus-ring: var(--notaly-shell-focus-ring);
     --notaly-overlay-backdrop: rgba(26, 26, 30, 0.24);
@@ -974,6 +953,9 @@ video {
     --notaly-shell-text-tertiary: #868690;
     --notaly-shell-popover: #2c2c35;
     --notaly-shell-popover-shadow: 0 8px 30px rgb(0 0 0 / 0.4);
+    --notaly-shell-modal-shadow: 0 12px 40px rgb(0 0 0 / 0.5);
+    /* 다크 shell(#111114) 위에서 한 단계 떠 보이도록 hover 표면을 쓴다 */
+    --notaly-toast-surface: var(--notaly-shell-hover);
     --notaly-shell-toolbar: #161619;
     --notaly-shell-inbox-accent: #c4841d;
     --notaly-shell-focus-border: rgba(220, 220, 224, 0.28);
@@ -991,6 +973,7 @@ video {
     --notaly-surface-muted: var(--notaly-shell-text-secondary);
     --notaly-surface-subtle: var(--notaly-shell-text-tertiary);
     --notaly-surface-shadow: var(--notaly-shell-popover-shadow);
+    --notaly-surface-modal-shadow: var(--notaly-shell-modal-shadow);
     --notaly-surface-focus-border: var(--notaly-shell-focus-border);
     --notaly-surface-focus-ring: var(--notaly-shell-focus-ring);
     --notaly-overlay-backdrop: rgba(0, 0, 0, 0.38);
@@ -1223,14 +1206,11 @@ video {
     max-height: min(85vh, 640px);
     box-sizing: border-box;
     background: var(--notaly-shell-surface);
-    border: 1px solid var(--notaly-shell-border);
-    border-radius: 12px;
-    box-shadow: var(--notaly-shell-popover-shadow);
+    border: 1px solid var(--notaly-shell-card-border);
+    border-radius: 10px;
+    box-shadow: var(--notaly-shell-modal-shadow);
     color: var(--notaly-shell-text-primary);
     overflow: hidden;
-  }        
-.ssx-dialog--wide {
-    max-width: 860px;
   }        
 .ssx-dialog__header {
     flex: 0 0 auto;
@@ -1238,13 +1218,12 @@ video {
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
-    padding: 15px 18px 13px;
-    border-bottom: 1px solid var(--notaly-shell-card-border);
+    padding: 18px 22px 12px;
   }        
 .ssx-dialog__title {
     margin: 0;
     font-size: 15px;
-    font-weight: 650;
+    font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--notaly-shell-text-primary);
   }        
@@ -1263,10 +1242,19 @@ video {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
-    padding: 16px 18px;
+    padding: 16px 22px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    /* 1a 셸은 기본 구분선 없음 — 본문이 실제로 잘려 있을 때만 경계 헤어라인을 보여준다 */
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+  }        
+.ssx-dialog__body[data-scrolled-top] {
+    border-top-color: var(--notaly-shell-card-border);
+  }        
+.ssx-dialog__body[data-scrolled-bottom] {
+    border-bottom-color: var(--notaly-shell-card-border);
   }        
 /* body는 flex column 스크롤 컨테이너다. 자식(특히 overflow:hidden인 .ssx-group/.ssx-sitelist)이
      flex-shrink로 줄어들면 스크롤 대신 내부 내용이 잘린다. 자식을 안 줄이면 넘칠 때 body가 스크롤한다. */        
@@ -1280,8 +1268,7 @@ video {
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
-    padding: 12px 18px;
-    border-top: 1px solid var(--notaly-shell-card-border);
+    padding: 12px 22px 16px;
   }        
 .ssx-dialog__close {
     flex: none;
@@ -1346,31 +1333,6 @@ video {
 .ssx-btn--compact {
     height: 28px;
     padding: 0 12px;
-  }        
-.ssx-iconbtn {
-    width: 28px;
-    height: 28px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    border: none;
-    background: transparent;
-    color: var(--notaly-shell-text-tertiary);
-    cursor: pointer;
-    flex-shrink: 0;
-  }        
-.ssx-iconbtn:hover:not(:disabled) {
-    background: var(--notaly-shell-hover);
-    color: var(--notaly-shell-text-primary);
-  }        
-.ssx-iconbtn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--notaly-shell-focus-ring);
-  }        
-.ssx-iconbtn:disabled {
-    opacity: 0.45;
-    cursor: default;
   }        
 /* ---- 그룹 / 접기(disclosure) ---- */        
 .ssx-group {
@@ -1730,14 +1692,6 @@ video {
 .ssx-badge svg {
     flex-shrink: 0;
   }        
-.ssx-badge--ok {
-    background: var(--notaly-signal-green-bg);
-    color: var(--notaly-signal-green-text);
-  }        
-.ssx-badge--warn {
-    background: var(--notaly-signal-amber-bg);
-    color: var(--notaly-signal-amber-text);
-  }        
 .ssx-badge--info {
     background: var(--notaly-signal-blue-bg);
     color: var(--notaly-signal-blue-text);
@@ -1746,32 +1700,7 @@ video {
     background: var(--notaly-signal-slate-bg);
     color: var(--notaly-signal-slate-text);
   }        
-.ssx-badge--danger {
-    background: var(--notaly-signal-rose-bg);
-    color: var(--notaly-signal-rose-text);
-  }        
-.ssx-badge--dashed {
-    background: transparent;
-    color: var(--notaly-shell-text-tertiary);
-    border: 1px dashed color-mix(in srgb, var(--notaly-shell-text-tertiary) 55%, transparent);
-  }        
 /* 클릭 가능한 미설정 뱃지(배포 설정 진입점): dashed 뱃지에 버튼 어포던스만 얹는다. */        
-.ssx-badge--action {
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    font-family: inherit;
-    cursor: pointer;
-  }        
-.ssx-badge--action:hover {
-    color: var(--notaly-shell-text-primary);
-    border-color: var(--notaly-shell-text-tertiary);
-    background: var(--notaly-shell-hover);
-  }        
-.ssx-badge--action:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--notaly-shell-focus-ring);
-  }        
 .ssx-badge__dot {
     width: 6px;
     height: 6px;
@@ -1804,28 +1733,6 @@ video {
 .ssx-chip--muted {
     background: var(--notaly-shell-hover);
     color: var(--notaly-shell-text-secondary);
-  }        
-.ssx-pill {
-    display: inline-flex;
-    align-items: center;
-    max-width: 15rem;
-    padding: 2px 8px;
-    border: 1px solid color-mix(in srgb, var(--notaly-shell-border) 72%, transparent);
-    border-radius: 6px;
-    background: color-mix(in srgb, var(--notaly-shell-hover) 55%, transparent);
-    color: var(--notaly-shell-text-secondary);
-    font-size: 11px;
-    cursor: pointer;
-  }        
-.ssx-pill:hover {
-    border-color: var(--notaly-shell-border);
-    background: var(--notaly-shell-hover);
-    color: var(--notaly-shell-text-primary);
-  }        
-.ssx-pill > span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }        
 /* ---- 요약 통계 카드 ---- */        
 .ssx-statgrid {
@@ -2030,18 +1937,6 @@ video {
     white-space: nowrap;
   }        
 /* ---- 완료: 저장 블록 ---- */        
-.ssx-panel {
-    border: 1px solid var(--notaly-shell-border);
-    border-radius: 10px;
-    padding: 13px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }        
-.ssx-panel__main {
-    flex: 1;
-    min-width: 0;
-  }        
 .ssx-result-head {
     display: flex;
     align-items: center;
@@ -2666,63 +2561,6 @@ video {
     margin-top: 8px;
   }        
 /* ---- 사이트 목록 행 ---- */        
-.ssx-sitelist {
-    border: 1px solid var(--notaly-shell-border);
-    border-radius: 11px;
-    box-shadow: var(--notaly-shell-popover-shadow);
-    overflow: hidden;
-    background: var(--notaly-shell-surface);
-  }        
-.ssx-siterow {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 13px 15px;
-  }        
-.ssx-siterow + .ssx-siterow {
-    border-top: 1px solid var(--notaly-shell-card-border);
-  }        
-.ssx-siterow__main {
-    flex: 1;
-    min-width: 0;
-  }        
-.ssx-siterow__name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--notaly-shell-text-primary);
-  }        
-.ssx-siterow__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 6px;
-  }        
-.ssx-siterow__note {
-    font-size: 12px;
-    color: var(--notaly-shell-text-tertiary);
-    margin-top: 7px;
-    line-height: 1.5;
-  }        
-.ssx-siterow__foot {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-    align-items: center;
-  }        
-.ssx-siterow__actions {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    flex-shrink: 0;
-  }        
-.ssx-siterow__progress {
-    margin-top: 9px;
-    max-width: 240px;
-  }        
-.ssx-bar__fill--info {
-    background: var(--notaly-signal-blue-text);
-  }        
 /* ---- 오버플로 메뉴 (컨테이너는 AnchoredPopover가 fixed로 렌더한다) ---- */        
 .ssx-menu__item {
     width: 100%;
@@ -2753,99 +2591,7 @@ video {
     margin: 4px 6px;
   }        
 /* ---- 빈 상태 / 온보딩 레일 ---- */        
-.ssx-empty {
-    padding: 26px 24px 22px;
-    text-align: center;
-    border: 1px solid var(--notaly-shell-border);
-    border-radius: 11px;
-    background: var(--notaly-shell-surface);
-  }        
-.ssx-empty__icon {
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 14px;
-    border-radius: 14px;
-    border: 1.5px dashed color-mix(in srgb, var(--notaly-shell-text-tertiary) 50%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--notaly-shell-text-tertiary);
-  }        
-.ssx-empty__title {
-    font-size: 15px;
-    font-weight: 650;
-    color: var(--notaly-shell-text-primary);
-    margin-bottom: 6px;
-  }        
-.ssx-empty__text {
-    margin: 0 auto 16px;
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--notaly-shell-text-secondary);
-    max-width: 36ch;
-  }        
-.ssx-rail {
-    display: flex;
-    align-items: flex-start;
-    gap: 0;
-    padding: 14px 16px;
-    border: 1px solid var(--notaly-shell-card-border);
-    border-radius: 11px;
-    background: color-mix(in srgb, var(--notaly-shell-hover) 45%, transparent);
-    margin-top: 12px;
-  }        
-.ssx-rail__step {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 6px;
-  }        
-.ssx-rail__num {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--notaly-shell-active);
-    color: var(--notaly-shell-text-tertiary);
-  }        
-.ssx-rail__num--active {
-    background: var(--notaly-shell-text-primary);
-    color: var(--notaly-shell-surface);
-  }        
-.ssx-rail__label {
-    font-size: 11.5px;
-    font-weight: 500;
-    color: var(--notaly-shell-text-tertiary);
-  }        
-.ssx-rail__label--active {
-    font-weight: 600;
-    color: var(--notaly-shell-text-primary);
-  }        
-.ssx-rail__line {
-    width: 22px;
-    align-self: flex-start;
-    margin-top: 11px;
-    height: 1px;
-    background: var(--notaly-shell-border);
-  }        
-/* ---- 토스트 ---- */        
-.ssx-toast {
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: var(--notaly-shell-hover);
-    color: var(--notaly-shell-text-primary);
-    font-size: 12.5px;
-  }        
-.ssx-toast--error {
-    background: var(--notaly-danger-bg);
-    color: var(--notaly-danger-text);
-  }  
+/* ---- 토스트 ---- */  
 .sr-only {
   position: absolute;
   width: 1px;
@@ -3183,6 +2929,10 @@ video {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }  
+.px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+}  
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -3194,6 +2944,10 @@ video {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}  
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }  
 .py-2 {
   padding-top: 0.5rem;
@@ -3365,6 +3119,9 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }  
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}  
 @keyframes enter {
 
   from {
@@ -3379,8 +3136,14 @@ video {
     transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
   }
 }  
+.ease-in-out {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}  
 .running {
   animation-play-state: running;
+}  
+.paused {
+  animation-play-state: paused;
 }  
 .\[setNewSelection\:applied\] {
   set-new-selection: applied;
@@ -5759,89 +5522,89 @@ video {
   opacity: 0.7;
 }
 
-:root{
-  --background: 45 33% 98%;
-  --foreground: 40 9% 7%;
-  --muted: 45 22% 93%;
-  --muted-foreground: 51 8% 33%;
-  --border: 55 11% 78%;
-  --accent: 71 85% 56%;
-  --primary: 40 9% 7%;
-  --card: 0 0% 100%;
-  --card-foreground: 40 9% 7%;
-  --app-font-family: "Helvetica Neue", Helvetica, "Segoe UI", Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+:root {
+  --app-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --background: 48 20% 95%;
+  --foreground: 45 8% 10%;
+  --muted: 47 19% 91%;
+  --muted-foreground: 42 5% 40%;
+  --border: 48 15% 87%;
+  --accent: 47 19% 91%;
+  --primary: 45 8% 10%;
+  --card: 48 33% 97%;
+  --card-foreground: 45 8% 10%;
 }
-:root.dark{
-  --background: 40 10% 6%;
-  --foreground: 48 31% 94%;
-  --muted: 48 11% 9%;
-  --muted-foreground: 54 9% 61%;
-  --border: 49 10% 21%;
-  --accent: 71 85% 56%;
-  --primary: 48 31% 94%;
-  --card: 51 19% 7%;
-  --card-foreground: 48 31% 94%;
+.editorContainer {
+  --font-color: #3b392f;
+  --anchor-color: #7d5f33;
+  --collection-editor-background-color: rgba(28, 27, 24, 0.03);
 }
-/* hex content 토큰은 core.css가 .editorContainer 스코프에 선언하므로 같은 스코프에서 이겨야 한다. */
-.editorContainer{
-  --font-color: #33312b;
-  --anchor-color: #131210;
-  --collection-editor-background-color: rgba(19, 18, 16, 0.03);
+:root.dark {
+  --background: 40 6% 9%;
+  --foreground: 47 18% 90%;
+  --muted: 48 8% 12%;
+  --muted-foreground: 46 6% 58%;
+  --border: 40 8% 15%;
+  --accent: 48 8% 12%;
+  --primary: 47 18% 90%;
+  --card: 45 7% 11%;
+  --card-foreground: 47 18% 90%;
 }
-.dark .editorContainer{
-  --font-color: #d2d0c6;
-  --anchor-color: #f4f2ea;
-  --collection-editor-background-color: rgba(244, 242, 234, 0.03);
+.dark .editorContainer {
+  --font-color: #cbc8bd;
+  --anchor-color: #c9a465;
+  --collection-editor-background-color: rgba(235, 233, 226, 0.03);
 }
+
 /* design content: publish-grade cleanup */
 .editorContainer.static-export { --group-icon-area-width: 1.25rem; }
 /* 마크다운 소스 마커(#, ##, 리스트 '-' 등 *_md/list_src)를 폭까지 제거해 순수 문서로.
    :has([*_md])로 거는 헤딩 사이징은 display:none 요소도 매칭하므로 그대로 유지된다. */
 .editorContainer.static-export [data-st-md-type$='_md'],
 .editorContainer.static-export [data-st-md-type*='list_src'] { display: none; }
-/* The Grid content typo parity */
-.editorContainer.static-export {
-  /* 본문 1.05rem / leading 1.68 → line-height 1.05*1.68≈1.78rem */
-  --font-size-readable: 1.05rem;
-  --line-height-readable: 1.78rem;
-  /* 헤딩 스케일 1.0 → h1 2rem, h2 1.6rem 등(디자인 볼드 그로테스크) */
-  --heading-scale: 1;
-  /* 매거진 읽기 컬럼 42rem */
-  --editor-content-max-width: 42rem;
-  /* 인용: 라임 팝 콜아웃 틴트 / 코드: 잉크 배경·페이퍼 틴트 */
-  --blockquote-border-color: transparent;
-  --blockquote-mark-color: transparent;
-  --code-block-background-color: #131210;
-  --inline-code-background-color: #f1efe9;
+
+.editorContainer {
+  /* 세리프 본문(SHELL의 --serif 재사용) */
+  --app-font-family: var(--serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", "Nanum Myeongjo", "AppleMyungjo", serif);
+  /* 본문 1.18rem · leading 1.8 → 2.124rem */
+  --font-size-readable: 1.18rem;
+  --line-height-readable: 2.124rem;
+  /* h1 2rem · h2 1.55rem · h3 1.28rem · h4 1.14rem 에 근접(base 2/1.6/1.3/1.15rem) */
+  --heading-scale: 0.98;
+  /* .pf-article(39rem) 읽기폭에 맞춘 좁은 본문 컬럼 */
+  --editor-content-max-width: 39rem;
+  /* 절제된 인용: 가는 좌측선(accent) + accent 마크 */
+  --blockquote-border-color: var(--accent, #7d5f33);
+  --blockquote-mark-color: var(--accent, #7d5f33);
+  /* 코드 틴트: surface 블록 + paper-2 인라인 */
+  --code-block-background-color: var(--surface, #faf9f5);
+  --inline-code-background-color: var(--paper-2, #eceae3);
 }
-.dark .editorContainer.static-export {
-  --code-block-background-color: #000000;
-  --inline-code-background-color: #1a1915;
+.dark .editorContainer {
+  --blockquote-border-color: var(--accent, #c9a465);
+  --blockquote-mark-color: var(--accent, #c9a465);
+  --code-block-background-color: var(--surface, #1d1c19);
+  --inline-code-background-color: var(--paper-2, #201f1b);
 }
 
-/* 헤딩을 디자인 800 느낌으로(core.css 기본은 bold=700). 콘텐츠 스코프 한정. */
-.editorContainer.static-export [data-st-line]:has([data-st-md-type*='heading']) .contentArea,
-.editorContainer.static-export [data-st-line]:has([data-st-md-type*='heading']) .contentArea::after {
-  font-weight: 800;
+/* ---- Tier B: 번호 매긴 인덱스(디자인 시그니처) ----
+ * .pf-nav 의 페이지 링크(.st-tree-page)에 CSS counter로 zero-pad 번호를 붙인다.
+ * navHtml은 tree 구조(폴더 접기)이므로 폴더별로 카운터를 리셋하지 않고
+ * 인덱스 전체에서 연속 번호를 매겨 "수집된 작품 목록" 리듬을 재현한다. */
+.pf-nav { counter-reset: pf-work; }
+.st-tree-page { counter-increment: pf-work; position: relative; padding-left: 3.2rem; }
+.st-tree-page::before {
+  content: counter(pf-work, decimal-leading-zero);
+  position: absolute; left: 0; top: 27px;
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; color: var(--faint); font-style: normal;
 }
+/* nested 페이지는 살짝 들여쓰므로(원본 .pf-work.sub) 번호도 함께 옮긴다 (폴더 하위 1단계가 sub) */
+.st-tree-children .st-tree-page { padding-left: 4.6rem; }
+.st-tree-children .st-tree-page::before { left: 1.4rem; }
+.st-tree-page:hover::before, .st-tree-page.is-active::before { color: var(--accent-soft); }
 
-/* 인용문 = 라임 채움 콜아웃: blockquote_div 세로 가이드를 가진 라인을 pop 배경 + 진한 굵은 글자로 덮는다.
-   frontArea의 guide/mark는 위에서 transparent 토큰으로 이미 숨겼다. */
-.editorContainer.static-export [data-st-line='true']:has(.blockquote_div) {
-  background: #cbee2f;
-  padding-top: 0.55rem;
-  padding-bottom: 0.55rem;
-}
-.editorContainer.static-export [data-st-line='true']:has(.blockquote_div) .contentArea {
-  color: #131210;
-  font-weight: 700;
-}
-.dark .editorContainer.static-export [data-st-line='true']:has(.blockquote_div) {
-  background: #cbee2f;
-}
-.dark .editorContainer.static-export [data-st-line='true']:has(.blockquote_div) .contentArea {
-  color: #131210;
-}
 /* natural-flow body scroll restore */
 html.app-wrapper, html.app-wrapper body { overflow: visible; }
 /* 자연 흐름 셸엔 내부 가로 스크롤 컨테이너가 없어 넓은 표가 페이지를 가로로 민다.
